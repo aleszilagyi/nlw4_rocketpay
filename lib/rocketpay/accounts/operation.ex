@@ -1,5 +1,6 @@
 defmodule Rocketpay.Accounts.Operation do
   alias Ecto.Multi
+
   alias Rocketpay.Account
 
   def call(%{"id" => id, "value" => value}, operation) do
@@ -35,7 +36,7 @@ defmodule Rocketpay.Accounts.Operation do
 
   defp handle_cast({:ok, value}, balance, :deposit), do: Decimal.add(balance, value)
   defp handle_cast({:ok, value}, balance, :withdraw), do: Decimal.sub(balance, value)
-  defp handle_cast(:error, _balance, _operation), do: {:error, "Invalid value! :/"}
+  defp handle_cast(:error, _balance, _operation), do: {:error, "Invalid deposit value!"}
 
   defp update_account({:error, _reason} = error, _repo, _account), do: error
 
@@ -47,6 +48,7 @@ defmodule Rocketpay.Accounts.Operation do
     |> repo.update()
   end
 
-  defp account_operation_name(operation),
-    do: "account_#{Atom.to_string(operation)}" |> String.to_atom()
+  defp account_operation_name(operation) do
+    "account_#{Atom.to_string(operation)}" |> String.to_atom()
+  end
 end

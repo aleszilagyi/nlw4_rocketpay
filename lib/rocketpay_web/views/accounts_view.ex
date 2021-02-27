@@ -6,7 +6,7 @@ defmodule RocketpayWeb.AccountsView do
         account: %Account{id: account_id, balance: balance}
       }) do
     %{
-      message: "Ballance changed successfully",
+      message: "Balance changed successfully",
       account: %{
         id: account_id,
         balance: balance
